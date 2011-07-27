@@ -1,4 +1,21 @@
-TODO: Add app name
-==================
+django-shop-simplenotifications
+================================
 
-TODO: Add project readme.
+This is a dead simple approach on email notifications for django-shop. The
+goal of this app is to hook into django-shop's various signals in order to 
+send emails to the shop owner and to the buyer on certain events.
+
+Installation
+=============
+
+Install this package into your virtualenv::
+
+  pip install -e git+git://github.com/mbrochh/django-shop-simplenotifications.git
+
+Add this app to your INSTALLED_APPS::
+
+  INSTALLED_APPS = (
+      ...
+      'django_shop_simplenotifications',
+  )
+
