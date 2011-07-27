@@ -1,0 +1,16 @@
+[
+  {
+    "pk": 1,
+    "model": "django_shop_simplenotifications.example",
+    "fields": {
+      "text": "Lorem ipsum..."
+    }
+  },
+  {
+    "pk": 2,
+    "model": "django_shop_simplenotifications.example",
+    "fields": {
+      "text": "Foo bar..."
+    }
+  }
+]
