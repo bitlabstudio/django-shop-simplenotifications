@@ -1,8 +1,8 @@
-"""Admin classes for django_shop_simplenotifications application."""
+"""Admin classes for shop_simplenotifications application."""
 
 from django.contrib import admin
 
-from django_shop_simplenotifications.models import Example
+from .models import Example
 
 
 class ExampleAdmin(admin.ModelAdmin):
@@ -11,3 +11,4 @@ class ExampleAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Example, ExampleAdmin)
+

@@ -11,7 +11,7 @@ def read(fname):
 
 
 setup(
-    name="django_shop_simplenotifications",
+    name="shop_simplenotifications",
     version=django_shop_simplenotifications.__version__,
     description=read('DESCRIPTION'),
     long_description=read('README.rst'),
@@ -21,5 +21,4 @@ setup(
     author_email='martin.brochhaus@gmail.com',
     url="https://github.com/mbrochh/django-shop-simplenotifications",
     include_package_data=True,
-    test_suite='django_shop_simplenotifications.tests.runtests.runtests',
 )

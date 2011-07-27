@@ -5,10 +5,10 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.list_detail import object_list
 
 
-from django_shop_simplenotifications.models import Example
+from shop_simplenotifications.models import Example
 
 
-def index(request, template_name='django_shop_simplenotifications/example_list.html'):
+def index(request, template_name='shop_simplenotifications/example_list.html'):
     """Index view."""
     qs = Example.objects.all()
 
@@ -22,5 +22,6 @@ def index(request, template_name='django_shop_simplenotifications/example_list.h
         queryset=qs,
         template_object_name='example',
 	paginate_by=10,
- 	page=page,        
+ 	page=page,
     )
+
