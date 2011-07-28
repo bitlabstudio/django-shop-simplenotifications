@@ -10,12 +10,12 @@ Installation
 
 Install this package into your virtualenv::
 
-  pip install -e git+git://github.com/mbrochh/django-shop-simplenotifications.git
+  pip install -e git+git://github.com/mbrochh/django-shop-simplenotifications.git#egg=shop_simplenotifications
 
 Add this app to your INSTALLED_APPS::
 
   INSTALLED_APPS = (
       ...
-      'django_shop_simplenotifications',
+      'shop_simplenotifications',
   )
 
