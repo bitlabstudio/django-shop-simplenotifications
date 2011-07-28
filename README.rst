@@ -1,6 +1,8 @@
 django-shop-simplenotifications
 ================================
 
+Do not use this, yet!
+
 This is a dead simple approach on email notifications for django-shop. The
 goal of this app is to hook into django-shop's various signals in order to 
 send emails to the shop owner and to the buyer on certain events.
