@@ -12,10 +12,15 @@ Install this package into your virtualenv::
 
   pip install -e git+git://github.com/mbrochh/django-shop-simplenotifications.git#egg=shop_simplenotifications
 
-Add this app to your INSTALLED_APPS::
+Add the app to your INSTALLED_APPS setting::
 
   INSTALLED_APPS = (
       ...
       'shop_simplenotifications',
   )
+
+Features
+=========
+
+  * When a buyer completes his order, the shop owner gets a notification mail
 
