@@ -12,7 +12,7 @@ def read(fname):
 
 setup(
     name="shop_simplenotifications",
-    version=django_shop_simplenotifications.__version__,
+    version=shop_simplenotifications.__version__,
     description=read('DESCRIPTION'),
     long_description=read('README.rst'),
     keywords='django,django-shop,email,notifications',
