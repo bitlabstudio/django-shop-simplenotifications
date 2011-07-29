@@ -21,20 +21,49 @@ def confirmed_email_notification(sender, **kwargs):
     subject_template_name = 'shop_simplenotifications/confirmed_subject.txt'
     body_template_name = 'shop_simplenotifications/confirmed_body.txt'
     request = kwargs.get('request')
+    order = kwargs.get('order')
     subject = loader.render_to_string(
         subject_template_name,
-        RequestContext(request, {'order': kwargs.get('order')})
+        RequestContext(request, {'order': order})
     )
     subject = subject.join(subject.splitlines())
     body = loader.render_to_string(
         body_template_name,
-        RequestContext(request, {'order': kwargs.get('order')})
+        RequestContext(request, {'order': order})
     )
     from_email = getattr(settings, 'SN_FROM_EMAIL',
                          settings.DEFAULT_FROM_EMAIL)
     owners = getattr(settings, 'SN_OWNERS', settings.ADMINS)
     send_mail(subject, body, from_email,
-            [owner[1] for owner in owners], fail_silently=False)
+              [owner[1] for owner in owners], fail_silently=False)
 
 confirmed.connect(confirmed_email_notification)
+
+
+def payment_instructions_email_notification(sender, **kwargs):
+    """
+    Sends an email with payment instructions to the customer once and order is
+    placed.
+    """
+    subject_template_name = \
+            'shop_simplenotifications/payment_instructions_subject.txt'
+    body_template_name = \
+            'shop_simplenotifications/payment_instructions_body.txt'
+    request = kwargs.get('request')
+    order = kwargs.get('order')
+    subject = loader.render_to_string(
+        subject_template_name,
+        RequestContext(request, {'order': order})
+    )
+    subject = subject.join(subject.splitlines())
+    body = loader.render_to_string(
+        body_template_name,
+        RequestContext(request, {'order': order})
+    )
+    from_email = getattr(settings, 'SN_FROM_EMAIL',
+                         settings.DEFAULT_FROM_EMAIL)
+    send_mail(subject, body, from_email,
+              [order.user.email,], fail_silently=False)
+
+confirmed.connect(payment_instructions_email_notification)
 

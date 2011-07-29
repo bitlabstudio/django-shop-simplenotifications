@@ -54,6 +54,10 @@ to override the defaults, add the folowing templates to your
 
   * confirmed_subject.html
   * confirmed_body.html
+  * payment_instructions_subject.html
+  * payment_instructions_body.html
+
+All templates have a ``request`` and an ``order`` variable in their context.
 
 Features
 =========

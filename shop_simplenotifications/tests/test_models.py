@@ -13,10 +13,9 @@ from shop.tests.util import Mock
 from shop.tests.utils.context_managers import SettingsOverride
 
 
-class ConfirmedTestCase(TestCase):
+class SignalHandlerBaseTestCase(object):
     """
-    Test case for the signal handler that sends a notification to the shop
-    owner when a order has been placed.
+    Base test case class for test classes that test signal handlers.
     """
     def setUp(self):
         self.user = User.objects.create(
@@ -35,9 +34,43 @@ class ConfirmedTestCase(TestCase):
 
         self.order.save()
 
+
+class PaymentInstructionsTestCase(SignalHandlerBaseTestCase, TestCase):
+    """
+    Test case for the signal handler that sends payment instructions to the
+    customer when an order has been placed.
+    """
+    def test_should_send_email_confirmed_signal(self):
+        confirmed.send(sender=self, order=self.order)
+        self.assertEqual(len(mail.outbox), 2)
+
+    def test_should_have_from_address_from_settings(self):
+        from_email = 'noreply@myshop.com'
+        with SettingsOverride(SN_FROM_EMAIL=from_email):
+            confirmed.send(sender=self, order=self.order)
+            self.assertEqual(mail.outbox[0].from_email, from_email)
+
+    def test_should_send_email_to_customer(self):
+        confirmed.send(sender=self, order=self.order)
+        self.assertEqual(mail.outbox[1].to, ['test@example.com',])
+
+    def test_has_subject_from_template(self):
+        confirmed.send(sender=self, order=self.order)
+        self.assertEqual(mail.outbox[1].subject, 'Your order at MyShop.com')
+
+    def test_has_body_from_template(self):
+        confirmed.send(sender=self, order=self.order)
+        self.assertTrue('Dear Customer' in mail.outbox[1].body)
+
+
+class ConfirmedTestCase(SignalHandlerBaseTestCase, TestCase):
+    """
+    Test case for the signal handler that sends a notification to the shop
+    owner when an order has been placed.
+    """
     def test_should_send_email_on_confirmed_signal(self):
         confirmed.send(sender=self, order=self.order)
-        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(len(mail.outbox), 2)
 
     def test_should_have_from_address_from_settings(self):
         from_email = 'noreply@myshop.com'
