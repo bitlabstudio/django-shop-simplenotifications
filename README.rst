@@ -52,8 +52,7 @@ Features
 Testing
 ========
 
-Currently this app does not ship with a test-project. If you want to test this
-app, please add it to the ``INSTALLED_APPS`` of your Django project, copy the
-file ``test_sn_settings`` into your apps root folder  and run
-``./manage.py test --settings=test_sn_settings shop_simplenotifications``. 
-Sorry for that. Will fix it soon.
+Currently I don't provide any bootstrapping script, so you will need to setup
+a virtual environment that has at least django and django-shop installed. 
+
+Once that is setup just run ``/runtests.sh``
