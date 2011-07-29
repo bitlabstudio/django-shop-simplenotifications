@@ -20,7 +20,7 @@ class ConfirmedTestCase(TestCase):
     """
     def setUp(self):
         self.user = User.objects.create(
-                username="test", 
+                username="test",
                 email="test@example.com")
         self.request = Mock()
         setattr(self.request, 'user', self.user)
@@ -50,4 +50,12 @@ class ConfirmedTestCase(TestCase):
         with SettingsOverride(SN_OWNERS=owners):
             confirmed.send(sender=self, order=self.order)
             self.assertEqual(len(mail.outbox[0].to), 2)
+
+    def test_has_subject_from_template(self):
+        confirmed.send(sender=self, order=self.order)
+        self.assertEqual(mail.outbox[0].subject, 'New order has been placed')
+
+    def test_has_body_from_template(self):
+        confirmed.send(sender=self, order=self.order)
+        self.assertTrue('Dear Shop-Owner' in mail.outbox[0].body)
 

@@ -44,15 +44,27 @@ payments. Each member of the tuple should be a tuple of
 
   (('John', 'john@example.com'), ('Mary', 'mary@example.com'))
 
+Templates
+==========
+
+In order to easily provide notifications with the wording and formatting of
+your choice, there are templates for all email subjects and bodies. In order
+to override the defaults, add the folowing templates to your
+``templates/shop_simplenotifications/`` folder:
+
+  * confirmed_subject.html
+  * confirmed_body.html
+
 Features
 =========
 
-  * When a buyer completes his order, the shop owner gets a notification mail
+  * When a buyer completes his order, the shop owners get a notification mail
+  * All notification emails can be easily templated.
 
 Testing
 ========
 
 Currently I don't provide any bootstrapping script, so you will need to setup
-a virtual environment that has at least django and django-shop installed. 
+a virtual environment that has at least django and django-shop installed.
 
 Once that is setup just run ``/runtests.sh``
