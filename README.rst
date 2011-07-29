@@ -21,6 +21,19 @@ Add the app to your INSTALLED_APPS setting::
       'shop_simplenotifications',
   )
 
+Configuration
+==============
+
+SN_FROM_EMAIL
+++++++++++++++
+
+The from address for your automated emails. Defaults to Django's
+DEFAULT_FROM_EMAIL.
+
+Example::
+
+  SN_EMAIL_FROM = 'noreply@myshop.com'
+
 Features
 =========
 

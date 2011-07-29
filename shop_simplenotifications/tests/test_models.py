@@ -1,14 +1,17 @@
 #-*- coding: utf-8 -*-
 """Test cases for the signal handlers."""
 import decimal
-from unittest import TestCase
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
+from django.test import TestCase
 
 from shop.models.ordermodel import Order
 from shop.order_signals import confirmed
 from shop.tests.util import Mock
+from shop.tests.utils.context_managers import SettingsOverride
+
 
 class ConfirmedTestCase(TestCase):
     """
@@ -34,4 +37,10 @@ class ConfirmedTestCase(TestCase):
     def test_should_send_email_on_confirmed_signal(self):
         confirmed.send(sender=self, order=self.order)
         self.assertEqual(len(mail.outbox), 1)
+
+    def test_should_have_from_address_from_settings(self):
+        from_email = 'noreply@myshop.com'
+        with SettingsOverride(SN_FROM_EMAIL=from_email):
+            confirmed.send(sender=self, order=self.order)
+            self.assertEqual(mail.outbox[0].from_email, from_email)
 
