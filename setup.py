@@ -1,6 +1,6 @@
 import os
 from setuptools import setup, find_packages
-import django_shop_simplenotifications
+import shop_simplenotifications
 
 
 def read(fname):
