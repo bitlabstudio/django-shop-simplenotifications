@@ -13,8 +13,9 @@ def confirmed_email_notification(sender, **kwargs):
     """
     from_email = getattr(settings, 'SN_FROM_EMAIL',
                          settings.DEFAULT_FROM_EMAIL)
+    owners = getattr(settings, 'SN_OWNERS', settings.ADMINS)
     send_mail('Subject here', 'Here is the message.', from_email,
-            ['to@example.com'], fail_silently=False)
+            [owner[1] for owner in owners], fail_silently=False)
 
 confirmed.connect(confirmed_email_notification)
 

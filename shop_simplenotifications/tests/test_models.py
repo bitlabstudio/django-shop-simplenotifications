@@ -23,8 +23,9 @@ class ConfirmedTestCase(TestCase):
                 username="test", 
                 email="test@example.com")
         self.request = Mock()
-        setattr(self.request, 'user', None)
+        setattr(self.request, 'user', self.user)
         self.order = Order()
+        self.order.user = self.user
         self.order.order_subtotal = decimal.Decimal('10')
         self.order.order_total = decimal.Decimal('10')
         self.order.shipping_cost = decimal.Decimal('0')
@@ -43,4 +44,10 @@ class ConfirmedTestCase(TestCase):
         with SettingsOverride(SN_FROM_EMAIL=from_email):
             confirmed.send(sender=self, order=self.order)
             self.assertEqual(mail.outbox[0].from_email, from_email)
+
+    def test_should_send_email_to_owners(self):
+        owners = (('John', 'john@example.com'), ('Mary', 'mary@example.com'))
+        with SettingsOverride(SN_OWNERS=owners):
+            confirmed.send(sender=self, order=self.order)
+            self.assertEqual(len(mail.outbox[0].to), 2)
 
