@@ -12,7 +12,7 @@ Installation
 
 Install this package into your virtualenv::
 
-  pip install -e git+git://github.com/mbrochh/django-shop-simplenotifications.git#egg=shop_simplenotifications
+  pip install django-shop-simplenotifications 
 
 Add the app to your INSTALLED_APPS setting::
 
@@ -87,4 +87,3 @@ Example::
   pip install -e git+git://github.com/divio/django-shop.git#egg=shop
   cd shop_simplenotifications/tests
   ./runtests.py
-
