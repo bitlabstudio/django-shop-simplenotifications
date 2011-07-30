@@ -37,7 +37,7 @@ setup(
 
     author='Martin Brochhaus',
     author_email='martin.brochhaus@gmail.com',
-    url="https://github.com/mbrochh/django-shop-simplenotifications",
+    url="https://github.com/bitmazk/django-shop-simplenotifications",
 
     license='BSD License',
     platforms=['OS Independent'],
