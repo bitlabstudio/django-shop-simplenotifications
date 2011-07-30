@@ -26,7 +26,8 @@ CLASSIFIERS = [
 # Detailed instructions: http://docs.python.org/distutils/setupscript.html
 setup(
     name="django-shop-simplenotifications",
-    description=read('DESCRIPTION'),
+    description=('A simple reusable app for django-shop that sends email'
+                 'notifications on certain events'),
     long_description=read('README.rst'),
     version=shop_simplenotifications.__version__,
     install_requires=[
