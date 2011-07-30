@@ -25,7 +25,7 @@ CLASSIFIERS = [
 
 # Detailed instructions: http://docs.python.org/distutils/setupscript.html
 setup(
-    name="shop_simplenotifications",
+    name="django-shop-simplenotifications",
     description=read('DESCRIPTION'),
     long_description=read('README.rst'),
     version=shop_simplenotifications.__version__,
