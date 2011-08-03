@@ -2,10 +2,10 @@
 """Test cases for the signal handlers."""
 import decimal
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
+from django.test.signals import template_rendered
 
 from shop.models.ordermodel import Order
 from shop.order_signals import confirmed
@@ -33,6 +33,20 @@ class SignalHandlerBaseTestCase(object):
         self.order.billing_address_text = 'billing address example'
 
         self.order.save()
+        self.rendered_templates = []
+        template_rendered.connect(self.template_rendered_listener)
+
+    def tearDown(self):
+        template_rendered.disconnect(self.template_rendered_listener)
+
+    def template_rendered_listener(self, **kwargs):
+        self.rendered_templates.append(kwargs.get('sender'))
+
+    def was_template_rendered(self, name):
+        for template in self.rendered_templates:
+            if template.name == name:
+                return True
+        return False
 
 
 class PaymentInstructionsTestCase(SignalHandlerBaseTestCase, TestCase):
@@ -52,15 +66,17 @@ class PaymentInstructionsTestCase(SignalHandlerBaseTestCase, TestCase):
 
     def test_should_send_email_to_customer(self):
         confirmed.send(sender=self, order=self.order)
-        self.assertEqual(mail.outbox[1].to, ['test@example.com',])
+        self.assertEqual(mail.outbox[1].to, ['test@example.com', ])
 
     def test_has_subject_from_template(self):
         confirmed.send(sender=self, order=self.order)
-        self.assertEqual(mail.outbox[1].subject, 'Your order at MyShop.com')
+        self.assertTrue(self.was_template_rendered(
+            'shop_simplenotifications/payment_instructions_subject.txt'))
 
     def test_has_body_from_template(self):
         confirmed.send(sender=self, order=self.order)
-        self.assertTrue('Dear Customer' in mail.outbox[1].body)
+        self.assertTrue(self.was_template_rendered(
+            'shop_simplenotifications/payment_instructions_body.txt'))
 
 
 class ConfirmedTestCase(SignalHandlerBaseTestCase, TestCase):
@@ -86,9 +102,10 @@ class ConfirmedTestCase(SignalHandlerBaseTestCase, TestCase):
 
     def test_has_subject_from_template(self):
         confirmed.send(sender=self, order=self.order)
-        self.assertEqual(mail.outbox[0].subject, 'New order has been placed')
+        self.assertTrue(self.was_template_rendered(
+            'shop_simplenotifications/confirmed_subject.txt'))
 
     def test_has_body_from_template(self):
         confirmed.send(sender=self, order=self.order)
-        self.assertTrue('Dear Shop-Owner' in mail.outbox[0].body)
-
+        self.assertTrue(self.was_template_rendered(
+            'shop_simplenotifications/confirmed_body.txt'))
