@@ -1,3 +1,12 @@
+Version ongoing
+===============
+
+
+Version 0.1.3
+==============
+
+  * Fixed dependencies
+
 Version 0.1.2
 ==============
 
