@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from django.template import loader, RequestContext
 
 from shop.order_signals import confirmed
-from shop.utils.address import get_shipping_address_from_request, get_billing_address_from_request
+from shop.util.address import get_shipping_address_from_request, get_billing_address_from_request
 
 def subject(template_name):
     """Returns the email subject based on the subject template."""
