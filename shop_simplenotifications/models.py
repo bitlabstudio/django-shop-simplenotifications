@@ -55,7 +55,10 @@ def payment_instructions_email_notification(sender, **kwargs):
     f.write("="*40)
     f.write("\n")
     
-    request = kwargs.get('request')
+    #request = kwargs.get('request')
+    
+    for k,v in kwarg.iteritems():
+        f.write("%s = %s\n" % (str(k), str(v)))
     f.write(str(request))
     f.write("="*40)
     f.write("\n")
@@ -75,6 +78,7 @@ def payment_instructions_email_notification(sender, **kwargs):
     if request and get_billing_address_from_request(request):
         emails.append(get_billing_address_from_request(request))
     
+    emails = list(set(emails)) # removes duplicated entries
     if emails:
         subject = loader.render_to_string(
             subject_template_name,
