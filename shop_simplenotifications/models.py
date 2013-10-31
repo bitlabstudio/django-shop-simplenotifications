@@ -49,8 +49,24 @@ def payment_instructions_email_notification(sender, **kwargs):
             'shop_simplenotifications/payment_instructions_subject.txt'
     body_template_name = \
             'shop_simplenotifications/payment_instructions_body.txt'
+            
+    f = open("/tmp/djangoshop.log", "a")
+    f.write(str(kwargs))
+    f.write("="*40)
+    f.write("\n")
+    
     request = kwargs.get('request')
+    f.write(str(request))
+    f.write("="*40)
+    f.write("\n")
+    
+    
     order = kwargs.get('order')
+    f.write(str(order))
+    f.write("="*50)
+    f.write("\n")
+    
+    
     emails = []
     if order.user and order.user.email: 
         emails.append(order.user.email)
