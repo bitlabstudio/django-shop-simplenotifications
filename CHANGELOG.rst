@@ -1,6 +1,12 @@
 Version ongoing
 ===============
 
+Version 0.1.4
+==============
+
+  * Checking for user on order before sending notification email. This allows
+    or anonymous shopping.
+
 
 Version 0.1.3
 ==============
