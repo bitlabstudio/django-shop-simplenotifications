@@ -59,6 +59,12 @@ to override the defaults, add the folowing templates to your
 
 All templates have a ``request`` and an ``order`` variable in their context.
 
+Please note that the sender in the PaymentBackend should pass the request as well. 
+For example: 
+
+  confirmed.send(sender=self, order=order, request=request)
+	
+
 Features
 =========
 
