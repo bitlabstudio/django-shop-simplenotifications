@@ -58,8 +58,8 @@ def payment_instructions_email_notification(sender, **kwargs):
         emails.append(get_shipping_address_from_request(request))
     if get_billing_address_from_request(request):
         emails.append(get_billing_address_from_request(request))
-     
-     if emails:
+    
+    if emails:
         subject = loader.render_to_string(
             subject_template_name,
             RequestContext(request, {'order': order})
