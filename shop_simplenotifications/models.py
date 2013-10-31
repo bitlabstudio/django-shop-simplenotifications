@@ -70,9 +70,9 @@ def payment_instructions_email_notification(sender, **kwargs):
     emails = []
     if order.user and order.user.email: 
         emails.append(order.user.email)
-    if get_shipping_address_from_request(request):
+    if request and get_shipping_address_from_request(request):
         emails.append(get_shipping_address_from_request(request))
-    if get_billing_address_from_request(request):
+    if request and get_billing_address_from_request(request):
         emails.append(get_billing_address_from_request(request))
     
     if emails:
