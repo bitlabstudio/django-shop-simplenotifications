@@ -57,7 +57,7 @@ def payment_instructions_email_notification(sender, **kwargs):
     
     #request = kwargs.get('request')
     
-    for k,v in kwarg.iteritems():
+    for k,v in kwargs.iteritems():
         f.write("%s = %s\n" % (str(k), str(v)))
     f.write(str(request))
     f.write("="*40)
