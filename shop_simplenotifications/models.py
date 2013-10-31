@@ -51,14 +51,14 @@ def payment_instructions_email_notification(sender, **kwargs):
             'shop_simplenotifications/payment_instructions_body.txt'
             
     f = open("/tmp/djangoshop.log", "a")
-    f.write(str(kwargs))
+    f.write(str(sender))
     f.write("="*40)
     f.write("\n")
     
-    #request = kwargs.get('request')
+    request = kwargs.get('request')
     
     for k,v in kwargs.iteritems():
-        f.write("%s = %s\n" % (str(k), str(v)))
+        f.write("%s = <%s>\n" % (str(k), str(v)))
     f.write(str(request))
     f.write("="*40)
     f.write("\n")
