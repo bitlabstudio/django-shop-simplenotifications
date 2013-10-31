@@ -59,17 +59,23 @@ to override the defaults, add the folowing templates to your
 
 All templates have a ``request`` and an ``order`` variable in their context.
 
-Please note that the sender in the PaymentBackend should pass the request as well. 
-For example: 
+Please note that the sender in the PaymentBackend should pass the ``request`` as well. 
+Example::
 
   confirmed.send(sender=self, order=order, request=request)
-	
+  
 
 Features
 =========
 
   * When a buyer completes his order, the shop owners get a notification mail
+  * When a buyer requests prepayment, the shop owners get a notification mail 
+    and the buyer gets the payment instructions. The email address will be 
+	taken from a) the logged in User, if available and/or b) the billing address, 
+	if available and the address model has an ``email`` attribute. If both address 
+	are equal, only one email will be sent.
   * All notification emails can be easily templated.
+
 
 Testing
 ========

@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from django.template import loader, RequestContext
 
 from shop.order_signals import confirmed
-from shop.util.address import get_shipping_address_from_request, get_billing_address_from_request
+from shop.util.address import get_billing_address_from_request
 
 def subject(template_name):
     """Returns the email subject based on the subject template."""
@@ -49,34 +49,13 @@ def payment_instructions_email_notification(sender, **kwargs):
             'shop_simplenotifications/payment_instructions_subject.txt'
     body_template_name = \
             'shop_simplenotifications/payment_instructions_body.txt'
-            
-    f = open("/tmp/djangoshop.log", "a")
-    f.write(str(sender))
-    f.write("="*40)
-    f.write("\n")
     
     request = kwargs.get('request')
-    
-    for k,v in kwargs.iteritems():
-        f.write("%s = <%s>\n" % (str(k), str(v)))
-    f.write(str(request))
-    f.write("="*40)
-    f.write("\n")
-    
-    
     order = kwargs.get('order')
-    f.write(str(order))
-    f.write("="*50)
-    f.write("\n")
-    
     
     emails = []
     if order.user and order.user.email: 
         emails.append(order.user.email)
-    if request and get_shipping_address_from_request(request):
-        address = get_shipping_address_from_request(request)
-        if hasattr(address, 'email'):
-            emails.append(address.email)
     if request and get_billing_address_from_request(request):
         address = get_billing_address_from_request(request)
         if hasattr(address, 'email'):
