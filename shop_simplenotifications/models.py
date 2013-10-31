@@ -74,9 +74,14 @@ def payment_instructions_email_notification(sender, **kwargs):
     if order.user and order.user.email: 
         emails.append(order.user.email)
     if request and get_shipping_address_from_request(request):
-        emails.append(get_shipping_address_from_request(request).email)
+        address = get_shipping_address_from_request(request)
+        if hasattr(address, 'email'):
+            emails.append(address.email)
     if request and get_billing_address_from_request(request):
-        emails.append(get_billing_address_from_request(request).email)
+        address = get_billing_address_from_request(request)
+        if hasattr(address, 'email'):
+            emails.append(address.email)
+        emails.append(address.email)
     
     emails = list(set(emails)) # removes duplicated entries
     if emails:
