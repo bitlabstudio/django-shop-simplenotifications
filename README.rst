@@ -57,25 +57,26 @@ to override the defaults, add the folowing templates to your
   * payment_instructions_subject.txt
   * payment_instructions_body.txt
 
-All templates have a ``request`` and an ``order`` variable in their context.
+All templates have a ``request`` and an ``order`` variable in their context. 
 
 Please note that the sender in the PaymentBackend should pass the ``request`` as well. 
 Example::
 
   confirmed.send(sender=self, order=order, request=request)
-  
+
 
 Features
 =========
 
   * When a buyer completes his order, the shop owners get a notification mail
   * When a buyer requests prepayment, the shop owners get a notification mail 
-    and the buyer gets the payment instructions. The email address will be 
-	taken from a) the logged in User, if available and/or b) the billing address, 
+    and the buyer gets the payment instructions. The email address will be taken from 
+		a) the logged in User, if available and/or 
+		b) the billing address, 
 	if available and the address model has an ``email`` attribute. If both address 
-	are equal, only one email will be sent.
+	are equal, only one email will be sent. This works for guests and logged in 
+	Users. 
   * All notification emails can be easily templated.
-
 
 Testing
 ========
