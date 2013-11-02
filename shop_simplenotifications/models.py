@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from django.template import loader, RequestContext
 
 from shop.order_signals import confirmed
-
+from shop.util.address import get_billing_address_from_request
 
 def subject(template_name):
     """Returns the email subject based on the subject template."""
@@ -49,9 +49,21 @@ def payment_instructions_email_notification(sender, **kwargs):
             'shop_simplenotifications/payment_instructions_subject.txt'
     body_template_name = \
             'shop_simplenotifications/payment_instructions_body.txt'
+    
     request = kwargs.get('request')
     order = kwargs.get('order')
-    if order.user and order.user.email:
+    
+    emails = []
+    if order.user and order.user.email: 
+        emails.append(order.user.email)
+    if request and get_billing_address_from_request(request):
+        address = get_billing_address_from_request(request)
+        if hasattr(address, 'email'):
+            emails.append(address.email)
+        emails.append(address.email)
+    
+    emails = list(set(emails)) # removes duplicated entries
+    if emails:
         subject = loader.render_to_string(
             subject_template_name,
             RequestContext(request, {'order': order})
@@ -63,8 +75,7 @@ def payment_instructions_email_notification(sender, **kwargs):
         )
         from_email = getattr(settings, 'SN_FROM_EMAIL',
                              settings.DEFAULT_FROM_EMAIL)
-        send_mail(subject, body, from_email,
-                  [order.user.email,], fail_silently=False)
+        send_mail(subject, body, from_email, emails, fail_silently=False)
 
 confirmed.connect(payment_instructions_email_notification)
 
