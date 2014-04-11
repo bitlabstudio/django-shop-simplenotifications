@@ -60,8 +60,7 @@ def payment_instructions_email_notification(sender, **kwargs):
         address = get_billing_address_from_request(request)
         if hasattr(address, 'email'):
             emails.append(address.email)
-        emails.append(address.email)
-    
+
     emails = list(set(emails)) # removes duplicated entries
     if emails:
         subject = loader.render_to_string(
