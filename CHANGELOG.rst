@@ -1,6 +1,12 @@
 Version ongoing
 ===============
 
+Version 0.2
+===========
+
+  * Allowing to send HTML emails by providing ``confirmed_body.html`` and
+    ``payment_instructions_body.txt`` templates.
+
 Version 0.1.4
 ==============
 
