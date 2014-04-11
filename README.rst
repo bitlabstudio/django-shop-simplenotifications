@@ -101,6 +101,6 @@ Example::
   git clone git://github.com/bitmazk/django-shop-simplenotifications.git
   cd django-shop-simplenotifications
   python setup.py install
-  pip install -e git+git://github.com/divio/django-shop.git#egg=shop
+  pip install -r test_requirements.txt
   cd shop_simplenotifications/tests
   ./runtests.py

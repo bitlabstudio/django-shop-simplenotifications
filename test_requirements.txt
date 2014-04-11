@@ -1,0 +1,9 @@
+Fabric
+factory-boy
+mock
+django-nose
+coverage
+django-coverage
+ipython
+ipdb
+flake8

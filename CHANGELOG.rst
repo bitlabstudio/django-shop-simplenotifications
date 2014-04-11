@@ -1,6 +1,8 @@
 Version ongoing
 ===============
 
+  * Updated testrunner and added test_requirements
+
 Version 0.2
 ===========
 

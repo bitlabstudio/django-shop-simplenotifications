@@ -1,41 +1,36 @@
 #!/usr/bin/env python
-import os, sys
+"""
+This script is a trick to setup a fake Django environment, since this reusable
+app will be developed and tested outside any specifiv Django project.
+
+Via ``settings.configure`` you will be able to set all necessary settings
+for your app and run the tests as if you were calling ``./manage.py test``.
+
+"""
+import sys
+
 from django.conf import settings
+import test_settings
 
 
-DIRNAME = os.path.dirname(__file__)
-settings.configure(
-    DEBUG=True,
-    DATABASES={
-       "default": {
-           "ENGINE": "django.db.backends.sqlite3",
-           "NAME": ":memory:",
-       }
-    },
-    ADMINS=(('John', 'john@example.com'),),
-    SOUTH_TESTS_MIGRATE=False,
-    INSTALLED_APPS=(
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'shop',
-        'shop_simplenotifications',
-    )
-)
+if not settings.configured:
+    settings.configure(**test_settings.__dict__)
 
 
-from django.test.simple import run_tests
+from django_coverage.coverage_runner import CoverageRunner
+from django_nose import NoseTestSuiteRunner
+
+
+class NoseCoverageTestRunner(CoverageRunner, NoseTestSuiteRunner):
+    """Custom test runner that uses nose and coverage"""
+    pass
 
 
 def runtests(*test_args):
-    if not test_args:
-        test_args = ['shop_simplenotifications']
-    parent = os.path.join(            
-        os.path.dirname(os.path.abspath(__file__)), "..", "..")
-    sys.path.insert(0, parent)
-    failures = run_tests(test_args, verbosity=1, interactive=True)
+    failures = NoseCoverageTestRunner(verbosity=2, interactive=True).run_tests(
+        test_args)
     sys.exit(failures)
 
 
 if __name__ == '__main__':
     runtests(*sys.argv[1:])
-
